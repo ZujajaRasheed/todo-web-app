@@ -1,0 +1,1 @@
+ALTER TABLE `todo` DROP INDEX `todo_email_unique`;

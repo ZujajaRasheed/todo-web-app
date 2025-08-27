@@ -1,103 +1,94 @@
-import Image from "next/image";
+'use client'
 
-export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+import React from 'react';
+import Link from 'next/link';
+import {useRouter} from 'next/navigation'
+import { useActionState ,useEffect} from 'react';
+import Input from './components/Input';
+import Animation from './components/Animate';
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+const page = () => {
+const router=useRouter();
+async function handleForm( previousData:any,formData:FormData)
+{
+
+  let email=(formData.get("email") as string);
+   let password=(formData.get("password")as string);
+   console.log("email",email)
+      console.log("password",password)
+   if(!email||!password)
+   {
+    return {error:"fill all the required fields"}
+   }
+
+   else if(password.length<8)
+    {
+ return {error:"password must contain atleast 8 letters"}
+   }
+
+
+   else{
+    let response = await fetch("/api/login",{
+      method:'POST',
+      headers:{
+        'Accept':'application/json',
+        'Content-Type':'application/json'
+      },
+      body:JSON.stringify({
+        email,password
+      })
+    });
+let data=await response.json()
+console.log("status:", data);
+console.log("ok:", response.ok);
+console.log("data:", data);
+if (!response.ok) {
+
+  return { error:data.error||"could not login! try again,response.error" };
 }
+
+else{
+  console.log(response)
+  return {message:data.message}
+}
+} 
+}
+const[data,action,pending]=useActionState(handleForm,undefined)
+
+useEffect(()=>
+{
+  if(data?.message)
+  {
+    const timeout=setTimeout(()=>
+    {
+ router.push("/home")
+    },200)
+    
+  }
+},[data])
+
+
+  return (
+
+ <div className="h-screen bg-gray-200 flex justify-center items-center">
+  <Animation>
+ <div className="bg-[rgb(0,107,99)] px-16 pt-8 pb-12  text-white">
+ <h1 className="text-3xl mb-8  text-center ">Welcome!</h1>
+ <form action={action}  className="flex flex-col items-center justify-center gap-4">
+  {data?.error &&<span className="text-red-500">{data.error}</span>}
+  {data?.message&&<span className="text-green-600">{data.message}</span> }
+
+<Input   name="email" type="text" label="Email" />
+<Input  name="password" type="password" label="Password"/>
+
+  <button disabled={pending}className="px-10 py-2 rounded-md bg-white mt-4 mb-4 text-[rgb(0,107,99)] transform transition duration-300 hover:scale-x-110">{pending?"Processing...":"Login"} </button>
+   <div className="block px-2"><span>Don't have an account?</span>
+   <Link href="/signup" className="hover:underline"> Signup</Link></div>
+    </form>
+    </div>
+    </Animation>
+    </div>
+  )
+}
+
+export default page
