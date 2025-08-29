@@ -96,8 +96,8 @@ if(data?.message)
 
     <div className="h-screen bg-gray-200 flex justify-center items-center ">
       {/* <Animation> */}
-        <div className="bg-[rgb(0,107,99)] px-24 pt-8 pb-12  text-white">
-                <h1 className="text-3xl mb-8  text-center">Register!</h1>
+        <div className="bg-[rgb(0,107,99)] px-30 pt-20 pb-20  text-[20px] text-white">
+                <h1 className="text-7xl mb-8  text-center">Register!</h1>
            
         
       <form action={action} className="flex flex-col justify-center items-center gap-4">

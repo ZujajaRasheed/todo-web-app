@@ -57,7 +57,7 @@ const [data,action,pending]=useActionState(handleTodo,undefined)
   return (
      <div className="h-screen w-full  ">
         <Image
-        src="/image.png"
+        src="/todobg.avif"
         alt="background"
         fill
         priority
@@ -71,17 +71,17 @@ const [data,action,pending]=useActionState(handleTodo,undefined)
         <Logout />
       </div>
   <Animation>
- <div className="bg-[rgb(0,107,99)] px-16 pt-8 pb-8  text-white flex flex-col  items-center">
+ <div className="bg-[rgb(0,107,99)] px-30 pt-20 pb-29  text-white flex flex-col  items-center text-[20px]">
   {data?.error&& <span className="text-red-500">{data.error}</span>}
   {data?.message&&<span className="text-green-500">{data.message}</span>}
- <h1 className="text-3xl mb-8  text-center ">ToDo List</h1>
+ <h1 className="text-7xl mb-8  text-center ">ToDo List</h1>
  <form action={action} className="flex flex-col items-center justify-center gap-4">
  
-<div className="flex ">
-<input type="text" name="todo" placeholder="Add your task" className="rounded-2xl px-5 border-[0.5px] border-white py-2 text-center mr-1 focus:outline-none"></input>
+<div className="flex mt-8 ">
+<input type="text" name="todo" placeholder="Add your task" className="rounded-3xl px-8 border-[0.5px] border-white py-4 text-center mr-1 focus:outline-none"></input>
 
 
-  <button type="submit" className="px-2 rounded-full bg-white  text-[rgb(0,107,99)] transform transition duration-300 hover:scale-x-110" disabled={pending}>{pending?"processing..":"Add "}</button>
+  <button type="submit" className="px-4 rounded-full bg-white  text-[rgb(0,107,99)] transform transition duration-300 hover:scale-x-110" disabled={pending}>{pending?"processing..":"Add "}</button>
 </div>
    
     </form>

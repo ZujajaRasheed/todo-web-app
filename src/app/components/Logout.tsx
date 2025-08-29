@@ -35,7 +35,7 @@ else
     <div>
 
       
-      <button onClick={(e)=>handleLogout(e)}className="px-2 py-4  rounded-full bg-red-500  text-xs   hover:bg-red-300 ">Logout</button>
+      <button onClick={(e)=>handleLogout(e)}className="px-4 py-6  rounded-full bg-red-500  text-xs   hover:bg-red-300 ">Logout</button>
     </div>
   )
 }

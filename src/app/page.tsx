@@ -70,10 +70,10 @@ useEffect(()=>
 
   return (
 
- <div className="h-screen bg-gray-200 flex justify-center items-center">
+ <div className="h-screen bg-gray-200 flex justify-center items-center ">
   <Animation>
- <div className="bg-[rgb(0,107,99)] px-16 pt-8 pb-12  text-white">
- <h1 className="text-3xl mb-8  text-center ">Welcome!</h1>
+ <div className="bg-[rgb(0,107,99)] px-30 pt-20 pb-20  text-white text-[20px]">
+ <h1 className="text-7xl mb-16  text-center ">Welcome!</h1>
  <form action={action}  className="flex flex-col items-center justify-center gap-4">
   {data?.error &&<span className="text-red-500">{data.error}</span>}
   {data?.message&&<span className="text-green-600">{data.message}</span> }
@@ -81,7 +81,7 @@ useEffect(()=>
 <Input   name="email" type="text" label="Email" />
 <Input  name="password" type="password" label="Password"/>
 
-  <button disabled={pending}className="px-10 py-2 rounded-md bg-white mt-4 mb-4 text-[rgb(0,107,99)] transform transition duration-300 hover:scale-x-110">{pending?"Processing...":"Login"} </button>
+  <button disabled={pending}className="px-10 py-2 rounded-md bg-white mt-16 mb-8 text-[rgb(0,107,99)] transform transition duration-300 hover:scale-x-110">{pending?"Processing...":"Login"} </button>
    <div className="block px-2"><span>Don't have an account?</span>
    <Link href="/signup" className="hover:underline"> Signup</Link></div>
     </form>
