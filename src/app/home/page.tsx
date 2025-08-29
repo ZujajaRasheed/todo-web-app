@@ -20,7 +20,7 @@ async function handleTodo(prevData:any,formData:FormData)
 {
  
 let todo=formData.get("todo")as String
-let response =await fetch("http://localhost:3000/api/todo",
+let response =await fetch("/api/todo",
   {
     method:'POST',headers:{
       'Accept':'Application/json',
