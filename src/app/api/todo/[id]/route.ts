@@ -5,7 +5,7 @@ import { db } from '@/lib/db';
 import { eq } from 'drizzle-orm';
 import { todo } from '@/databaseSchema/schema';
 
-export async function DELETE(req:any,{params}:{params:{id:string}})
+export async function DELETE(req:Request,{params}:{params:{id:string}})
 {try{
   
 const id= Number(params.id)
@@ -23,7 +23,7 @@ console.log("id.............",id)
 }
 
 
-export async function PUT(req:Request,{params}:{params:{id:String}})
+export async function PUT(req:Request,{params}:{params:{id:string}})
 {try{
     const body=await req.json();
     const newTodo=body.updatedTodo;
