@@ -23,11 +23,12 @@ console.log("id.............",id)
 }
 
 
-export async function PUT(req:Request,{params}:{params:{id:string}})
+export async function PUT(req:Request,context:{params:{id:string}})
+
 {try{
     const body=await req.json();
     const newTodo=body.updatedTodo;
-const id=Number(params.id)
+const id=Number(context.params.id)
 console.log("newtod",newTodo)
 console.log(" updated todo id",id)
 const result=await db.update(todo).set({title:newTodo}).where(eq(todo.id,id))
